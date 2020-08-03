@@ -65,7 +65,7 @@ header h1 {
 
 .modal {
     position: absolute;
-    right: 30px;
+    margin: auto;
     background-color: burlywood;
     box-shadow: darkgoldenrod 10px -10px 30px;
     border: solid 1px darkgoldenrod;

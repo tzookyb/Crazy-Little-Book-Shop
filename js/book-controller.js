@@ -5,6 +5,7 @@ var gElPageSelector = document.querySelector('.page-selector');
 
 $(document).ready(function () {
     loadBooks();
+    sortBooks();
     renderBooks();
 });
 
@@ -41,7 +42,6 @@ function renderBooks() {
     var elBookTotal = document.querySelector('.book-total')
     elBookTotal.innerText = `Total number of books: ${gBooks.length}`;
     renderPageSelector();
-    console.log('Render completed.');
 }
 function renderPageSelector() {
     var strHTML = '';
