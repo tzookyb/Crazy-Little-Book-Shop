@@ -23,6 +23,7 @@ function loadBooks() {
         renderBooks();
     }
     gBooks = books;
+    sortBooks();
     console.log('books DB loaded');
 }
 function _createBooks() {

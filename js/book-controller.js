@@ -5,7 +5,6 @@ var gElPageSelector = document.querySelector('.page-selector');
 
 $(document).ready(function () {
     loadBooks();
-    sortBooks();
     renderBooks();
 });
 
