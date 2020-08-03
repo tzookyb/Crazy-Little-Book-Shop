@@ -84,9 +84,9 @@ function onShowUpdateModal(bookId) {
     var book = getBooks(bookId);
     var strHTML = '';
     strHTML += `
-        < button onclick = "onCloseModal()" > X</button >
+        <button onclick="onCloseModal()">X</button>
             <h2>${book.title}</h2>
-            <img src="img/${book.img}" height=400px />
+            <img src="img/${book.title}.jpg" height=400px />
                 <p>Book Price: ${book.price}</p>
                 <input type="number" class="update-price" placeholder="Enter updated price" /></input >
                     <button onclick="onUpdateBookPrice('${bookId}')">Update</button>
