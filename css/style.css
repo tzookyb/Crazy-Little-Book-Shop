@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    background-color: navajowhite;
+    background-image: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-blend-mode: soft-light;
+    background-size: cover;
+    user-select: none;
+    font-family: 'Gentium Book Basic', serif;
+}
+
+.page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+header {
+    flex-grow: 2;
+    border-bottom: solid goldenrod 3px;
+}
+
+.logo {
+    margin-left: 20px;
+    margin-top: 5px;
+    height: 35px;
+}
+
+header h1 {
+    color: brown;
+    text-shadow: coral 0px -3px 5px;
+    font-size: xx-large;
+    display: inline-block;
+    margin: 0;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: goldenrod;
+    background-image: url('../img/bg.jpg');
+    background-blend-mode: hard-light;
+    box-shadow: goldenrod -20px 5px 10px;
+    opacity: 0.9;
+    flex-grow: 3;
+}
+
+.add-book {
+    margin: 10px;
+}
+
+.content {
+    margin-top: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal {
+    position: absolute;
+    right: 30px;
+    background-color: burlywood;
+    box-shadow: darkgoldenrod 10px -10px 30px;
+    border: solid 1px darkgoldenrod;
+    border-radius: 20px;
+    padding: 10px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    visibility: hidden;
+}
+
+.modal button {
+    align-self: flex-end;
+}
+
+.modal input {
+    padding: 5px;
+    box-shadow: inset -3px -3px 10px #eee;
+    border-radius: 15px;
+    outline: none;
+    width: 90%;
+    margin: 5px;
+}
+
+.modal input:focus {
+    background-color: lightsalmon;
+    transition: 0.3s;
+}
+
+.modal .book-price {
+    width: 15%;
+    text-align: center;
+}
+
+.modal .price, .modal .rating {
+    align-self: flex-end;
+    margin: 10px 50px;
+}
+
+button {
+    background: #3498db;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    /* text-shadow: 1px 0px 3px; */
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    user-select: none;
+}
+
+button:hover {
+    color: black;
+    transition: 0.5s;
+}
+
+thead {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    color: teal;
+    text-shadow: 0px -1px 5px;
+}
+
+table {
+    width: 75vw;
+    background-color: tan;
+    background-image: url('../img/bg.jpg');
+    background-blend-mode: screen;
+    background-size: cover;
+    border-collapse: collapse;
+    border: 5px;
+    font-size: larger;
+}
+
+.bottom {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-total {
+    align-self: flex-end;
+    margin-right: 10vw;
+}
+
+.page-selector {
+    align-self: center;
+}
+
+.page-num {
+    color: #3498db;
+    background-color: transparent;
+    font-weight: 800;
+    border: solid 1px;
+    padding: 10px;
+    margin: 0px 1px;
+}
+
+.page-num.curr-page {
+    background-color: #3498db;
+    color: white;
+}
+
+footer {
+    height: 5vh;
+    text-align: right;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+}
+
+.actions>* {
+    box-sizing: border-box;
+    padding: 20px;
+    flex-grow: 1;
+    border-radius: 0;
+    border: 0;
+    box-shadow: 0px 0px 20px;
+}
+
+.info-btn {
+    background-color: orange;
+}
+
+.update-btn {
+    background-color: ;
+}
+
+.delete-btn {
+    background-color: red;
+}
