@@ -20,6 +20,7 @@ function loadBooks() {
     if (!books || !books.length) {
         console.log('no books available, creating default...');
         _createBooks();
+        renderBooks();
     }
     gBooks = books;
     console.log('books DB loaded');
@@ -90,6 +91,6 @@ function _compareBooks(book1, book2) {
     if (book1[gSortBy] > book2[gSortBy]) return 1;
     return 0;
 }
-function changePage(pageNum){
+function changePage(pageNum) {
     gCurrPageIdx = pageNum;
 }
