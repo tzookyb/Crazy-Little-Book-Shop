@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,12 +34,12 @@
             <table border=1 cellpadding=20>
                 <thead>
                     <tr>
-                        <td width=10% class="cursor-pointer" onclick="onSortBy('id')" data-trans="table-header-id">Id
-                        </td>
-                        <td class="cursor-pointer" onclick="onSortBy('title')" data-trans="table-header-title">Title
-                        </td>
-                        <td class="cursor-pointer" width=10% onclick="onSortBy('price')"
-                            data-trans="table-header-price">Price</td>
+                        <td width=10% class="cursor-pointer" onclick="onSortBy('id')"><img src="img/sort.png"
+                                width="25px" /> <span data-trans="table-header-id">Id</span></td>
+                        <td class="cursor-pointer" onclick="onSortBy('title')"><img src="img/sort.png" width="25px" />
+                            <span data-trans="table-header-title">Title</span></td>
+                        <td class="cursor-pointer" width=10% onclick="onSortBy('price')"><img src="img/sort.png"
+                                width="25px" /> <span data-trans="table-header-price">Price</span></td>
                         <td width=20% data-trans="table-header-actions">Manage</td>
                     </tr>
                 </thead>
@@ -61,4 +62,5 @@
     <script src="js/book-service.js"></script>
     <script src="js/book-controller.js"></script>
 </body>
+
 </html>
