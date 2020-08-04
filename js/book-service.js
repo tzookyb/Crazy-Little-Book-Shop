@@ -3,6 +3,82 @@ const gBooksPerPage = 4;
 var gBooks = [];
 var gSortBy;
 var gCurrPageIdx = 0;
+var gCurrLang = 'en';
+var gTrans = {
+    'header': {
+        en: 'Crazy Little Book Shop',
+        he: 'חנות ספרים מטריפה'
+    },
+    'add-button': {
+        en: 'Add Book',
+        he: 'הוסף ספר'
+    },
+    'footer': {
+        en: 'Coffeeright Idan Benjamin ©2020',
+        he: 'זכויות לקפה, עידן בנימין 2020©'
+    },
+    'table-header-id': {
+        en: 'Id',
+        he: 'מזהה'
+    },
+    'table-header-title': {
+        en: 'Title',
+        he: 'כותר'
+    },
+    'table-header-price': {
+        en: 'Price',
+        he: 'מחיר'
+    },
+    'table-header-actions': {
+        en: 'Manage',
+        he: 'ניהול'
+    },
+    'info-btn': {
+        en: 'Info',
+        he: 'מידע'
+    },
+    'update-btn': {
+        en: 'Update',
+        he: 'עדכון'
+    },
+    'remove-btn': {
+        en: 'Remove',
+        he: 'הסר'
+    },
+    'book-total': {
+        en: 'Total number of books:',
+        he: 'המספר הכולל של הספרים:'
+    },
+    'add-book-title': {
+        en: 'Add a book to database:',
+        he: 'הוסף ספר למסד נתונים:'
+    },
+    'add-book-price': {
+        en: 'Enter Book Price:',
+        he: 'הכנס את מחיר הספר:'
+    },
+    'add-book-placeholder': {
+        en: 'Enter book title',
+        he: 'שם הספר'
+    },
+    'book-price': {
+        en: 'Book Price:',
+        he: 'מחיר הספר:'
+    },
+    'rating': {
+        en: 'Rating:',
+        he: 'דירוג:'
+    },
+    'update-price-placeholder': {
+        en: 'Updated price',
+        he: 'מחיר עדכני'
+    },
+    'add-btn': {
+        en: 'Add',
+        he: 'הוסף'
+    },
+
+}
 
 function getBooks(bookId) {
     if (!bookId) {
@@ -83,4 +159,18 @@ function _compareBooks(book1, book2) {
 }
 function changePage(pageNum) {
     gCurrPageIdx = pageNum;
+}
+function changeLang(lang) {
+    gCurrLang = lang;
+    saveCurrentLanguage(lang)
+}
+function saveCurrentLanguage(lang) {
+    saveToStorage('language', lang);
+}
+function loadCurrentLanguage() {
+    gCurrLang = loadFromStorage('language');
+    if (!gCurrLang) {
+        gCurrLang = 'en';
+        saveCurrentLanguage('en');
+    } else setLanguage(gCurrLang);
 }

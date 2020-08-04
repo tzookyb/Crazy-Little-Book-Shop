@@ -1,51 +1,46 @@
 'use strict'
-var gElTable = document.querySelector('.table');
-var gElModal = document.querySelector('.modal');
-var gElPageSelector = document.querySelector('.page-selector');
+const LOCALE = {
+    'en': { code: 'en-US', currency: 'USD' },
+    'he': { code: 'he-IL', currency: 'ILS' }
+}
 
 $(document).ready(function () {
     loadBooks();
     sortBooks();
+    loadCurrentLanguage();
+    onChangeLang();
     renderBooks();
 });
 
+function onPreventClose(ev) {
+    ev.stopPropagation();
+}
 function renderBooks() {
     var books = getBooks();
     var strHTML = '';
-    strHTML += `
-    <table border=1 cellpadding=20>
-    <thead>
-    <tr>
-    <td width=10% onclick="onSortBy('id')">Id</td>
-    <td onclick="onSortBy('title')">Title</td>
-    <td width=10% onclick="onSortBy('price')">Price</td>
-    <td width=20%>Actions</td>
-    </tr>
-    </thead>
-    `
     books.forEach(function (book) {
         strHTML += `
             <tr>
             <td>${book.id}</td>
             <td>${book.title}</td>
-            <td>${book.price}</td>
+            <td>${formatNumber(book.price)}</td>
             <td class="actions">
-            <button class="info-btn" onclick="onReadInfo('${book.id}')">Info</button>
-            <button class="update-btn" onclick="onShowUpdateModal('${book.id}')">Update</button>
-            <button class="delete-btn" onclick="onRemoveBook('${book.id}')">Delete</button>
+            <button class="info-btn" onclick="onReadInfo('${book.id}')" data-trans="info-btn">Info</button>
+            <button class="update-btn" onclick="onShowUpdateModal('${book.id}')" data-trans="update-btn">Update</button>
+            <button class="delete-btn" onclick="onRemoveBook('${book.id}')" data-trans="remove-btn">Remove</button>
             </td>
             </tr>
             `
     });
-    strHTML += '</table>';
-    gElTable.innerHTML = strHTML;
-    var elBookTotal = document.querySelector('.book-total')
-    elBookTotal.innerText = `Total number of books: ${gBooks.length}`;
+    $('tbody').html(strHTML);
+    $('.book-total').html(`<span data-trans="book-total">Total number of books:</span> ${gBooks.length}`);
     renderPageSelector();
+    doTranslate();
 }
 function renderPageSelector() {
     var strHTML = '';
     var numOfPages = gBooks.length / gBooksPerPage;
+    if (gCurrPageIdx > 0) strHTML += `<button class="page-num" onclick="onChangePage(${gCurrPageIdx - 1})"> < </button>`
     for (var i = 0; i < numOfPages; i++) {
         if (i === gCurrPageIdx) {
             strHTML += `<button class="page-num curr-page" onclick="onChangePage(${i})">${i + 1}</button>`;
@@ -54,7 +49,8 @@ function renderPageSelector() {
             strHTML += `<button class="page-num" onclick="onChangePage(${i})">${i + 1}</button>`;
         }
     }
-    gElPageSelector.innerHTML = strHTML;
+    if (gCurrPageIdx < numOfPages-1) strHTML += `<button class="page-num" onclick="onChangePage(${gCurrPageIdx + 1})"> > </button>`
+    $('.page-selector').html(strHTML);
 }
 function onRemoveBook(bookId) {
     removeBook(bookId);
@@ -63,20 +59,19 @@ function onRemoveBook(bookId) {
 function onShowAddModal() {
     var strHTML = '';
     strHTML += `
-        <button onclick="onCloseModal()">X</button>
-            <h2>Add a book to database</h2>
-            <input type="text" class="book-name" placeholder="Enter book title" /></input>
-                Enter book price:<input type="number" class="book-price" placeholder=""/></input>
-                    <button onclick="onAddBook()">Add</button>
+            <h2>${gTrans['add-book-title'][gCurrLang]}</h2>
+            <input type="text" class="book-name" placeholder="${gTrans['add-book-placeholder'][gCurrLang]}" /></input>
+                ${gTrans['add-book-price'][gCurrLang]}<input type="number" class="book-price" placeholder=""/></input>
+                    <button onclick="onAddBook()">${gTrans['add-btn'][gCurrLang]}</button>
     `
-    gElModal.innerHTML = strHTML;
-    gElModal.style.visibility = 'visible';
+    $('.modal-content').html(strHTML);
+    $('.modal').show(400);
 }
 function onAddBook() {
-    var name = document.querySelector('.book-name').value;
-    var price = document.querySelector('.book-price').value;
-    gElModal.style.visibility = 'hidden';
-    gElModal.innerHTML = '';
+    var name = $('.book-name').val();
+    var price = $('.book-price').val();
+    $('.modal').hide(400);
+    $('.modal-content').html('');
     addBook(name, price);
     renderBooks();
 }
@@ -84,20 +79,19 @@ function onShowUpdateModal(bookId) {
     var book = getBooks(bookId);
     var strHTML = '';
     strHTML += `
-        <button onclick="onCloseModal()">X</button>
             <h2>${book.title}</h2>
             <img src="img/${book.title}.jpg" height=400px />
-                <p>Book Price: ${book.price}</p>
-                <input type="number" class="update-price" placeholder="Enter updated price" /></input >
-                    <button onclick="onUpdateBookPrice('${bookId}')">Update</button>
+                <p>${gTrans['book-price'][gCurrLang]} ${formatNumber(book.price)}</p>
+                <input type="number" onclick="" class="update-price book-price" placeholder="${gTrans['update-price-placeholder'][gCurrLang]}" /></input >
+                    <button onclick="onUpdateBookPrice('${bookId}')">${gTrans['update-btn'][gCurrLang]}</button>
     `
-    gElModal.innerHTML = strHTML;
-    gElModal.style.visibility = 'visible';
+    $('.modal-content').html(strHTML);
+    $('.modal').show(400);
 }
 function onUpdateBookPrice(bookId) {
-    var updatedPrice = document.querySelector('.update-price').value;
-    gElModal.style.visibility = 'hidden';
-    gElModal.innerHTML = '';
+    var updatedPrice = $('.update-price').val();
+    $('.modal').hide(400);
+    $('.modal-content').html('');
     updateBookPrice(bookId, updatedPrice);
     renderBooks();
 }
@@ -105,27 +99,26 @@ function onReadInfo(bookId) {
     var strHTML = '';
     var book = getBooks(bookId);
     strHTML = `
-        <button onclick="onCloseModal()">X</button>
         <h2>${book.title}</h2>
         <img src="img/${book.title}.jpg" alt="Book Cover Image" height=400px />
         <p>${book.info}</p>
-        <p class="price">Book Price: ${book.price}</p>
-        <span class="rating">Rating:
+        <p class="price">${gTrans['book-price'][gCurrLang]} ${formatNumber(book.price)}</p>
+        <span class="rating">${gTrans['rating'][gCurrLang]}
         <button onclick="onChangeRating('${book.id}','down')">-</button>
         <span>${book.rating}</span>
         <button onclick="onChangeRating('${book.id}', 'up')">+</button>
         </span>
     `
-    gElModal.innerHTML = strHTML;
-    gElModal.style.visibility = 'visible';
+    $('.modal-content').html(strHTML);
+    $('.modal').show(400);
 }
 function onChangeRating(bookId, direction) {
     changeRating(bookId, direction);
     onReadInfo(bookId);
 }
 function onCloseModal() {
-    gElModal.style.visibility = 'hidden';
-    gElModal.innerHTML = '';
+    $('.modal').hide(400);
+    $('.modal-content').html('');
 }
 function onSortBy(criteria) {
     sortBooks(criteria)
@@ -134,4 +127,29 @@ function onSortBy(criteria) {
 function onChangePage(pageNum) {
     changePage(pageNum);
     renderBooks();
+}
+function onChangeLang() {
+    $('body').removeClass(gCurrLang);
+    var lang = $('.lang-select').val();
+    $('body').addClass(lang);
+    changeLang(lang);
+    renderBooks();
+}
+function doTranslate() {
+    var els = document.querySelectorAll('[data-trans');
+    els.forEach(element => {
+        $(element).text(gTrans[element.dataset.trans][gCurrLang]);
+
+    });
+}
+function setLanguage(lang) {
+    $('.lang-select').val(lang);
+}
+function formatNumber(num) {
+    console.log(num);
+    console.log(LOCALE[gCurrLang].code);
+    console.log(LOCALE[gCurrLang].currency);
+
+    return new Intl.NumberFormat(LOCALE[gCurrLang].code,
+        { style: 'currency', currency: LOCALE[gCurrLang].currency }).format(num);
 }

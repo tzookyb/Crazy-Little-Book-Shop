@@ -9,6 +9,16 @@ body {
     font-family: 'Gentium Book Basic', serif;
 }
 
+.en {
+    font-family: 'Gentium Book Basic', serif;
+    direction: ltr;
+}
+
+.he {
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+}
+
 .page-container {
     height: 100vh;
     display: flex;
@@ -64,18 +74,25 @@ header h1 {
 }
 
 .modal {
+    display: none;
     position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+}
+
+.modal-content {
     margin: auto;
+    margin-top: 75px;
     background-color: burlywood;
     box-shadow: darkgoldenrod 10px -10px 30px;
     border: solid 1px darkgoldenrod;
     border-radius: 20px;
-    padding: 10px;
+    padding: 15px;
     width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    visibility: hidden;
 }
 
 .modal button {
@@ -97,11 +114,11 @@ header h1 {
 }
 
 .modal .book-price {
-    width: 15%;
+    width: 20%;
     text-align: center;
 }
 
-.modal .price, .modal .rating {
+p.price, span.rating {
     align-self: flex-end;
     margin: 10px 50px;
 }
@@ -112,7 +129,6 @@ button {
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
-    /* text-shadow: 1px 0px 3px; */
     text-align: center;
     text-transform: uppercase;
     color: white;
@@ -128,7 +144,6 @@ thead {
     font-size: larger;
     font-weight: bold;
     text-align: center;
-    cursor: pointer;
     color: teal;
     text-shadow: 0px -1px 5px;
 }
@@ -145,18 +160,19 @@ table {
 }
 
 .bottom {
-    height: 10vh;
+    height: 15vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .book-total {
-    align-self: flex-end;
     margin-right: 10vw;
+    margin: auto;
 }
 
 .page-selector {
-    align-self: center;
+    margin: auto;
 }
 
 .page-num {
@@ -175,7 +191,7 @@ table {
 
 footer {
     height: 5vh;
-    text-align: right;
+    margin-inline-start: 78vw;
 }
 
 .actions {
@@ -197,10 +213,10 @@ footer {
     background-color: orange;
 }
 
-.update-btn {
-    background-color: ;
-}
-
 .delete-btn {
     background-color: red;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
