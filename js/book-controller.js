@@ -146,10 +146,6 @@ function setLanguage(lang) {
     $('.lang-select').val(lang);
 }
 function formatNumber(num) {
-    console.log(num);
-    console.log(LOCALE[gCurrLang].code);
-    console.log(LOCALE[gCurrLang].currency);
-
     return new Intl.NumberFormat(LOCALE[gCurrLang].code,
         { style: 'currency', currency: LOCALE[gCurrLang].currency }).format(num);
 }
